@@ -1,0 +1,52 @@
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define the Gaussian function for equation (5)
+def gaussian_function(x, a):
+    return np.exp(-a * x**2)
+
+# Define the Gaussian transform function for equation (5)
+def gaussian_transform(w, a):
+    return np.sqrt(np.pi / a) * np.exp(-w**2 / (4 * a))
+
+# Values of 'a' and the corresponding colors for the plots
+a_values = [100, 10, 1, 0.1, 0.01]
+colors = ['blue', 'green', 'red', 'purple', 'orange']
+
+# Generate a range of x and omega values for plotting the functions
+x_values = np.logspace(-2, 2, 400)  # For f(x), from 10^-2 to 10^2
+w_values = np.logspace(-2, 2, 400)  # For F(ω), from 10^-2 to 10^2
+
+# Plot for f(x) with the note that b=1
+plt.figure(figsize=(10, 6))
+ax1 = plt.subplot(1, 1, 1)
+ax1.set_xscale('log')
+ax1.set_yscale('log')
+for a, color in zip(a_values, colors):
+    y_values = gaussian_function(x_values, a)
+    ax1.plot(x_values, y_values, label=f'a={a}', color=color)
+plt.xlabel('x')
+plt.ylabel('f(x)')
+plt.title('f(x) Log-Log Plot of Equation (5)')
+plt.legend()
+plt.grid(True, which="both", ls="--")
+gaussian_fx_log_log_plot_path = './f(x)_log_log_plot(5).png'
+plt.savefig(gaussian_fx_log_log_plot_path, bbox_inches='tight')
+plt.close()
+
+# Plot for F(ω) with the note that b=1
+plt.figure(figsize=(10, 6))
+ax2 = plt.subplot(1, 1, 1)
+ax2.set_xscale('log')
+ax2.set_yscale('log')
+for a, color in zip(a_values, colors):
+    y_values = gaussian_transform(w_values, a)
+    ax2.plot(w_values, y_values, label=f'a={a}', color=color)
+plt.xlabel('ω')
+plt.ylabel('F(ω)')
+plt.title('F(ω) Log-Log Plot of Equation (5)')
+plt.legend()
+plt.grid(True, which="both", ls="--")
+gaussian_fomega_log_log_plot_path = './F(ω)_log_log_plot(5).png'
+plt.savefig(gaussian_fomega_log_log_plot_path, bbox_inches='tight')
+plt.close()
